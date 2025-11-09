@@ -1,0 +1,26 @@
+Cryptocurrencies Notes
+
+1. Introduction:
+   - Cryptocurrencies are decentralized digital currencies secured by cryptography.
+   - Bitcoin was the first cryptocurrency, introduced in 2009 by Satoshi Nakamoto.
+
+2. Key Concepts:
+   - Blockchain: A distributed ledger technology that records transactions.
+   - Mining: The process of validating transactions and adding them to the blockchain.
+   - Wallets: Digital tools to store crypto assets.
+   - Private and Public Keys: Used for authentication and security.
+
+3. Popular Cryptocurrencies:
+   - Bitcoin (BTC)
+   - Ethereum (ETH)
+   - Ripple (XRP)
+   - Litecoin (LTC)
+   - Cardano (ADA)
+
+4. Consensus Mechanisms:
+   - Proof of Work (PoW)
+   - Proof of Stake (PoS)
+   - Delegated Proof of Stake (DPoS)
+
+5. Applications:
+   - Smart Contracts, NFTs, DeFi (Decentralized Finance), Cross-border Payments.

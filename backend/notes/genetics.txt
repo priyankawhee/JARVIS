@@ -1,0 +1,25 @@
+Genetics Notes
+
+1. Introduction:
+   - Genetics is the study of heredity and variation in living organisms.
+
+2. Mendelian Genetics:
+   - Gregor Mendel’s experiments on pea plants established inheritance laws:
+     - Law of Segregation
+     - Law of Independent Assortment
+     - Law of Dominance
+
+3. DNA and RNA:
+   - DNA: Deoxyribonucleic acid; carries genetic code.
+   - RNA: Ribonucleic acid; involved in protein synthesis (mRNA, tRNA, rRNA).
+
+4. Chromosomes and Genes:
+   - Chromosomes carry genes; humans have 23 pairs.
+   - Genes are segments of DNA responsible for traits.
+
+5. Modern Genetics:
+   - Genome Sequencing, Genetic Engineering, CRISPR-Cas9.
+   - Applications in medicine, agriculture, and forensics.
+
+6. Genetic Disorders:
+   - Down Syndrome, Hemophilia, Cystic Fibrosis, Sickle Cell Anemia.

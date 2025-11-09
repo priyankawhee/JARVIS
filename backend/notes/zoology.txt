@@ -1,0 +1,25 @@
+Zoology Notes
+
+1. Introduction:
+   - Zoology is the study of animals, their structure, physiology, development, and classification.
+
+2. Animal Classification:
+   - Kingdom Animalia is divided based on body structure, symmetry, body cavity, and segmentation.
+   - Major Phyla: Porifera, Cnidaria, Platyhelminthes, Nematoda, Annelida, Arthropoda, Mollusca, Echinodermata, Chordata.
+
+3. Body Systems:
+   - Digestive System: Converts food into energy and nutrients.
+   - Circulatory System: Transports oxygen and nutrients.
+   - Nervous System: Controls body responses and actions.
+   - Reproductive System: Enables procreation.
+
+4. Animal Physiology:
+   - Homeostasis: Maintaining internal balance.
+   - Metabolism: Sum of all biochemical processes.
+
+5. Evolution:
+   - Charles Darwin proposed Natural Selection as a mechanism for evolution.
+   - Adaptations lead to species survival.
+
+6. Importance:
+   - Helps understand biodiversity, ecology, and human evolution.

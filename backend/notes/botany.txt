@@ -1,0 +1,27 @@
+Botany Notes
+
+1. Introduction:
+   - Botany is the branch of biology that deals with the scientific study of plants.
+   - It includes structure, properties, and biochemical processes of plants, as well as plant classification, diseases, and interactions with the environment.
+
+2. Plant Structure:
+   - Root System: Absorbs water and nutrients, anchors the plant.
+   - Shoot System: Consists of stems, leaves, and flowers.
+   - Leaves: Main site for photosynthesis.
+   - Flowers: Reproductive organs producing seeds.
+
+3. Photosynthesis:
+   - Process by which plants convert light energy into chemical energy.
+   - Equation: 6CO2 + 6H2O + light → C6H12O6 + 6O2.
+   - Chlorophyll captures light energy in chloroplasts.
+
+4. Plant Classification:
+   - Algae, Bryophytes, Pteridophytes, Gymnosperms, Angiosperms.
+   - Based on presence of vascular tissue and seed formation.
+
+5. Plant Hormones:
+   - Auxins, Gibberellins, Cytokinins, Ethylene, Abscisic Acid.
+   - Regulate growth, flowering, fruiting, and dormancy.
+
+6. Importance:
+   - Provides oxygen, food, shelter, medicine, and maintains ecological balance.

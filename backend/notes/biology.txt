@@ -1,0 +1,24 @@
+Biology Notes
+
+1. Introduction:
+   - Biology is the study of living organisms and their interactions with the environment.
+
+2. Branches:
+   - Botany: Study of plants.
+   - Zoology: Study of animals.
+   - Microbiology: Study of microorganisms.
+   - Genetics: Study of heredity and variation.
+
+3. Cell Biology:
+   - Cell is the basic unit of life.
+   - Types: Prokaryotic and Eukaryotic cells.
+   - Cell Organelles: Nucleus, Mitochondria, Ribosomes, Chloroplasts.
+
+4. Genetics:
+   - DNA carries genetic information.
+   - Mendelian Inheritance: Dominant and Recessive traits.
+   - Modern genetics includes gene editing (CRISPR-Cas9).
+
+5. Evolution and Ecology:
+   - Evolution explains diversity of life through natural selection.
+   - Ecology studies relationships between organisms and their environment.

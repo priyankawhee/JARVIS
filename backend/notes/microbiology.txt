@@ -1,0 +1,24 @@
+Microbiology Notes
+
+1. Introduction:
+   - Microbiology is the study of microscopic organisms such as bacteria, viruses, fungi, and protozoa.
+
+2. Types of Microorganisms:
+   - Bacteria: Prokaryotic, single-celled organisms.
+   - Viruses: Acellular entities requiring host cells to reproduce.
+   - Fungi: Eukaryotic organisms; can be unicellular or multicellular.
+   - Protozoa: Unicellular eukaryotes found in water and soil.
+
+3. Applications:
+   - Medicine: Production of antibiotics and vaccines.
+   - Agriculture: Nitrogen fixation by bacteria.
+   - Industry: Fermentation (beer, yogurt, cheese).
+   - Environment: Waste decomposition and bioremediation.
+
+4. Pathogens and Diseases:
+   - Bacterial: Tuberculosis, Cholera.
+   - Viral: Influenza, COVID-19.
+   - Fungal: Ringworm, Candidiasis.
+
+5. Techniques:
+   - Microscopy, Culture Methods, Staining, Genetic Engineering.

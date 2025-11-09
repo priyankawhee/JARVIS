@@ -1,0 +1,23 @@
+Deep Learning Notes
+
+1. Introduction:
+   - Deep learning is a subset of machine learning that uses neural networks with multiple layers.
+   - It mimics the human brain in processing data and creating patterns for decision making.
+
+2. Key Concepts:
+   - Neural Networks: Made up of neurons (nodes) organized in layers.
+   - Activation Functions: Sigmoid, ReLU, Tanh.
+   - Backpropagation: Algorithm for training neural networks.
+   - Loss Functions: Mean Squared Error, Cross Entropy.
+
+3. Architectures:
+   - CNN (Convolutional Neural Networks): Used for image data.
+   - RNN (Recurrent Neural Networks): Used for sequential data.
+   - LSTM and GRU: Variants of RNN for long-term dependencies.
+   - Transformer: Used in NLP (BERT, GPT).
+
+4. Frameworks:
+   - TensorFlow, PyTorch, Keras.
+
+5. Applications:
+   - Computer Vision, Natural Language Processing, Speech Recognition, Autonomous Systems.
