@@ -80,7 +80,7 @@ Jarvis (be fun, concise, and helpful):"""
 
     # === CALL GEMINI 2.5 PRO ===
     try:
-        model = genai.GenerativeModel("gemini-2.5-pro")
+        model = genai.GenerativeModel("gemini-2.0-flash")
         response = model.generate_content(prompt)
         reply = response.text.strip()
     except Exception as e:
