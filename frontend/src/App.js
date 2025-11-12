@@ -1,15 +1,15 @@
-import { useState, useRef, useEffect, useMemo } from "react";
-import { memo } from "react";
-import "./App.css";
+import { useState, useRef, useEffect, useMemo, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { Paperclip, Send } from "lucide-react";
+import "./App.css";
 
 // === STABLE PARTICLE BACKGROUND ===
 const ParticleBackground = memo(() => {
   const particles = useMemo(() => {
     return [...Array(25)].map((_, i) => {
-      const types = ['triangle', 'hex', 'circle'];
+      const types = ["triangle", "hex", "circle"];
       const type = types[Math.floor(Math.random() * types.length)];
       const size = 18 + Math.random() * 35;
       const left = Math.random() * 100;
@@ -21,7 +21,7 @@ const ParticleBackground = memo(() => {
 
   return (
     <div className="particle-bg">
-      {particles.map(p => (
+      {particles.map((p) => (
         <div
           key={p.key}
           className={`particle ${p.type}`}
@@ -50,57 +50,65 @@ function App() {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isTyping]);
 
- const sendMessage = async () => {
-  if (!input.trim()) return;
+  const sendMessage = async () => {
+    if (!input.trim() && files.length === 0) return;
 
-  setMessages(prev => [...prev, { sender: "user", text: input }]);
-  setInput("");
-  setIsTyping(true);
+    const userText = input || `[Uploaded ${files.length} file(s)]`;
+    setMessages((prev) => [...prev, { sender: "user", text: userText }]);
+    setInput("");
+    setIsTyping(true);
 
-  const recentMessages = messages
-    .slice(-10)
-    .map(m => m.sender === "user" ? `User: ${m.text}` : `Jarvis: ${m.text}`)
-    .join("\n");
+    const recentMessages = messages
+      .slice(-10)
+      .map((m) =>
+        m.sender === "user" ? `User: ${m.text}` : `Jarvis: ${m.text}`
+      )
+      .join("\n");
 
-  const payload = {
-    message: input,
-    chat_history: recentMessages
+    const formData = new FormData();
+    formData.append("message", input);
+    formData.append("chat_history", recentMessages);
+    files.forEach(file => formData.append("files", file));
+
+    try {
+      const response = await fetch("http://localhost:8000/chat", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+      setIsTyping(false);
+      setMessages((prev) => [
+        ...prev,
+        { sender: "jarvis", text: data.response },
+      ]);
+      setFiles([]);
+    } catch (err) {
+      setIsTyping(false);
+      setMessages((prev) => [
+        ...prev,
+        { sender: "jarvis", text: `Error: ${err.message}` },
+      ]);
+    }
   };
-
-  try {
-    const response = await fetch("http://localhost:8000/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-
-    const data = await response.json();
-    setIsTyping(false);
-    setMessages(prev => [...prev, { sender: "jarvis", text: data.response }]);
-  } catch (err) {
-    setIsTyping(false);
-    setMessages(prev => [...prev, { sender: "jarvis", text: `Error: ${err.message}` }]);
-  }
-};
 
   const handleFileChange = (e) => {
     const selected = Array.from(e.target.files);
     setFiles(selected);
-    setMessages(prev => [
+    setMessages((prev) => [
       ...prev,
-      { sender: "user", text: `Attached: ${selected.map(f => f.name).join(", ")}` }
+      {
+        sender: "user",
+        text: `Attached: ${selected.map((f) => f.name).join(", ")}`,
+      },
     ]);
   };
 
   return (
     <div className="app-container">
-      {/* NEBULA BACKGROUND */}
       <div className="gradient-bg"></div>
-
-      {/* STABLE FLOATING PARTICLES */}
       <ParticleBackground />
 
-      {/* CHAT WITH HALO */}
       <motion.div
         initial={{ opacity: 0, y: 80 }}
         animate={{ opacity: 1, y: 0 }}
@@ -134,16 +142,35 @@ function App() {
                 >
                   <div className="bubble">
                     {msg.sender === "jarvis" ? (
-                      <ReactMarkdown 
+                      <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
                         components={{
-                          h1: ({node, ...props}) => <h1 style={{fontSize: '1.4em', margin: '16px 0 8px', fontWeight: 'bold', color: '#60a5fa'}} {...props} />,
-                          h2: ({node, ...props}) => <h2 style={{fontSize: '1.2em', margin: '12px 0 6px', fontWeight: 'bold', color: '#a78bfa'}} {...props} />,
-                          ul: ({node, ...props}) => <ul style={{margin: '8px 0', paddingLeft: '20px'}} {...props} />,
-                          ol: ({node, ...props}) => <ol style={{margin: '8px 0', paddingLeft: '20px'}} {...props} />,
-                          li: ({node, ...props}) => <li style={{margin: '4px 0'}} {...props} />,
-                          strong: ({node, ...props}) => <strong style={{color: '#60a5fa', fontWeight: 'bold'}} {...props} />,
-                          em: ({node, ...props}) => <em style={{color: '#c084fc'}} {...props} />,
+                          h1: ({ node, ...props }) => (
+                            <h1
+                              style={{
+                                fontSize: "1.4em",
+                                margin: "16px 0 8px",
+                                fontWeight: "bold",
+                                color: "#60a5fa",
+                              }}
+                              {...props}
+                            />
+                          ),
+                          strong: ({ node, ...props }) => (
+                            <strong
+                              style={{
+                                color: "#60a5fa",
+                                fontWeight: "bold",
+                              }}
+                              {...props}
+                            />
+                          ),
+                          em: ({ node, ...props }) => (
+                            <em
+                              style={{ color: "#c084fc" }}
+                              {...props}
+                            />
+                          ),
                         }}
                       >
                         {msg.text}
@@ -163,37 +190,52 @@ function App() {
                 className="message jarvis"
               >
                 <div className="bubble typing">
-                  <span></span><span></span><span></span>
+                  <span></span>
+                  <span></span>
+                  <span></span>
                 </div>
               </motion.div>
             )}
             <div ref={chatEndRef} />
           </div>
 
+          {/* Input area with attach and send icons */}
           <div className="input-area">
             <input
               type="text"
               placeholder="Ask Jarvis anything..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && sendMessage()}
+              onKeyDown={(e) =>
+                e.key === "Enter" && !e.shiftKey && sendMessage()
+              }
             />
-            <button onClick={() => fileInputRef.current?.click()} className="attach-btn">
-              Attach
+
+            <input
+              type="file"
+              multiple
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+              accept=".pdf,.txt,.docx,.csv,.json"
+            />
+
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="icon-btn attach-btn"
+              title="Attach File"
+            >
+              <Paperclip size={22} />
             </button>
-            <button onClick={sendMessage} className="send-btn">
-              Send
+
+            <button
+              onClick={sendMessage}
+              className="icon-btn send-btn"
+              title="Send Message"
+            >
+              <Send size={22} />
             </button>
           </div>
-
-          <input
-            type="file"
-            multiple
-            ref={fileInputRef}
-            style={{ display: "none" }}
-            onChange={handleFileChange}
-            accept=".pdf,.txt,.docx,.csv,.json"
-          />
         </div>
       </motion.div>
     </div>

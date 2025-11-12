@@ -1,5 +1,6 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Form, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from typing import List
 import os
 from dotenv import load_dotenv
 from pinecone import Pinecone, ServerlessSpec
@@ -7,6 +8,7 @@ from sentence_transformers import SentenceTransformer
 import google.generativeai as genai
 import json
 import io
+from PyPDF2 import PdfReader
 
 # === LOAD ENV & KEYS ===
 load_dotenv()
@@ -15,6 +17,7 @@ print("GEMINI KEY LOADED:", os.getenv("GEMINI_API_KEY", "MISSING!!!")[:15] + "..
 app = FastAPI()
 
 # === CORS ===
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -51,16 +54,40 @@ print("Connected to Pinecone index: jarvis-memory")
 
 # === MAIN CHAT ENDPOINT ===
 @app.post("/chat")
-async def chat(request: Request):
-    data = await request.json()
-    message = data.get("message", "").strip()
-    chat_history = data.get("chat_history", "")
+async def chat(
+    message: str = Form(""),
+    chat_history: str = Form(""),
+    files: List[UploadFile] = File([])
+):
+    user_message = message.strip()
+    file_content = ""
+    file_names = []
 
-    if not message:
-        return {"response": "Say something, boss!"}
+    # === READ UPLOADED FILES (PDF & TXT) ===
+    for file in files:
+        content = await file.read()
+        filename = file.filename
+        file_names.append(filename)
+        try:
+            if filename.lower().endswith(".pdf"):
+                reader = PdfReader(io.BytesIO(content))
+                text = "\n".join([page.extract_text() or "" for page in reader.pages])
+            elif filename.lower().endswith(".txt"):
+                text = content.decode("utf-8")
+            else:
+                text = f"[Unsupported file: {filename}]"
+        except Exception as e:
+            text = f"[Error reading {filename}: {str(e)}]"
+
+        if text.strip():
+            file_content += f"\n--- {filename} ---\n{text}\n"
+
+    if not user_message and not file_content:
+        return {"response": "Say something or upload a file, boss!"}
 
     # === SEARCH MEMORY ===
-    results = index.query(vector=embed(message + chat_history), top_k=5, include_metadata=True)
+    query_text = user_message + file_content + chat_history
+    results = index.query(vector=embed(query_text), top_k=5, include_metadata=True)
     pinecone_context = "\n".join([m["metadata"].get("text", "") for m in results["matches"]]) if results["matches"] else ""
 
     # === PERSONALITY PROMPT: FUN, FRIENDLY, "BOSS!" ===
@@ -75,12 +102,15 @@ Recent chat:
 Relevant memory:
 {pinecone_context}
 
-User: {message}
+File content (if any):
+{file_content}
+
+User: {user_message}
 Jarvis (be fun, concise, and helpful):"""
 
-    # === CALL GEMINI 2.5 PRO ===
+    # === CALL GEMINI 2.0 FLASH ===
     try:
-        model = genai.GenerativeModel("gemini-2.5-pro")
+        model = genai.GenerativeModel("gemini-2.0-flash")
         response = model.generate_content(prompt)
         reply = response.text.strip()
     except Exception as e:
@@ -88,9 +118,9 @@ Jarvis (be fun, concise, and helpful):"""
 
     # === SAVE TO MEMORY ===
     index.upsert([{
-        "id": str(hash(message + reply)),
-        "values": embed(message + reply),
-        "metadata": {"text": f"User: {message}\nJarvis: {reply}"}
+        "id": str(hash(user_message + reply)),
+        "values": embed(user_message + reply),
+        "metadata": {"text": f"User: {user_message}\nJarvis: {reply}"}
     }])
 
     return {"response": reply}
